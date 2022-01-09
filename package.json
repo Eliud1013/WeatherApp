@@ -1,0 +1,23 @@
+{
+  "name": "weatherapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "color": "^4.1.0",
+    "inquirer": "^8.2.0",
+    "request": "^2.88.2",
+    "yargs": "^17.3.1"
+  }
+}
