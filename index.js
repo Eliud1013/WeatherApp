@@ -1,3 +1,4 @@
+const { listPlaces } = require("./helpers/inquirer");
 require("colors");
 
 const Searchers = require("./models/searches");
@@ -19,13 +20,21 @@ async function Main() {
 
     switch (opt) {
       case 1:
+        //Pedir al usuario la ciudad
         const place = await readInput("Ciudad: ");
+        //Buscar ciudad en la api
+        const someshit = await searches.city(place);
+        //Mostrar menu con resultados
+        const id = await listPlaces(someshit);
+        const selectedPlace = someshit.find((p) => p.id === id);
+
         console.log("Informacion de la ciudad \n".green);
-        console.log("Ciudad: ");
-        console.log("Lat: ");
-        console.log("Lng: ");
+        console.log("Ciudad: " + selectedPlace.name);
+        console.log("Lat: " + selectedPlace.lng);
+        console.log("Lng: " + selectedPlace.lat);
         console.log("Temperatura: ");
-        await searches.city(place);
+        await pause();
+
         break;
       case 2:
         break;

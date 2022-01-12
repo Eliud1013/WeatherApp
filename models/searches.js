@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { config } = require("../config");
 
 class Searches {
   history = ["Navojoa", "Pueblo mayo", "ETC"];
@@ -7,15 +8,23 @@ class Searches {
   }
 
   async city(place = "") {
-    await axios
-      .get(
-        "https://api.mapbox.com/geocoding/v5/mapbox.places/-104.74381455742045,30.40003932335661.json?language=es&limit=1&access_token=pk.eyJ1IjoiZWxpdWQxMDEzIiwiYSI6ImNreTdwN2prejEzaXUycG9hZTFiNTMxM3QifQ.YTpNYV47pBqYEP7GTD4E6g"
-      )
-      .then((res) => console.log(res.data))
-      .catch((e) => {
-        console.log(e);
+    try {
+      const instance = axios.create({
+        baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${place}.json `,
+        params: {
+          access_token: config.token,
+        },
       });
-    return []; //retornar lugares que coincidan
+      const res = await instance.get();
+      return res.data.features.map((place) => ({
+        id: place.id,
+        name: place.place_name,
+        lng: place.center[0],
+        lat: place.center[1],
+      }));
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
